@@ -5,10 +5,10 @@ import Header from "./components/Header";
 const App = () => {
  return (
     <>
-
       <Header />
-      <Meals />
-
+      <main>
+        <Meals />
+      </main>
     </>
   );
 }
