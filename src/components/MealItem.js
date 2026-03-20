@@ -1,3 +1,5 @@
+import Button from './UI/Button'
+
 const MealItem = (props) => {
     return (
         <li className="meal-item">
@@ -8,8 +10,8 @@ const MealItem = (props) => {
                     <p className="meal-item-price">{new Intl.NumberFormat('et-EE', { style: 'currency', currency: 'EUR' }).format(props.meal.price)}</p>
                     <p className="meal-item-description">{props.meal.description}</p>
                 </div>
-                <p>
-                    <button>Add to Cart</button>
+                <p className='meal-item-action'>
+                    <Button>Add to Cart</Button>
                 </p>
             </article>
         </li>
