@@ -1,28 +1,44 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
 
 const CartContext = createContext()
 
-export const CartProvider = (props) => {
-    const [items, setItems] = useState([])
+const initialState = {
+    items: []
+}
 
-    const addItem = (meal) => {
-        setItems((prevItems) => {
-            const existingItem = prevItems.find(item => item.id === meal.id)
-            
-            if (existingItem) {
-                return prevItems.map(item =>
-                    item.id === meal.id
+const cartReducer = (state, action) => {
+    if (action.type === 'ADD_ITEM') {
+        const existingItem = state.items.find(item => item.id === action.payload.id)
+        
+        if (existingItem) {
+            return {
+                ...state,
+                items: state.items.map(item =>
+                    item.id === action.payload.id
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 )
             }
-            
-            return [...prevItems, { ...meal, quantity: 1 }]
-        })
+        }
+        
+        return {
+            ...state,
+            items: [...state.items, { ...action.payload, quantity: 1 }]
+        }
+    }
+
+    return state
+}
+
+export const CartProvider = (props) => {
+    const [cartState, dispatchCartAction] = useReducer(cartReducer, initialState)
+
+    const addItem = (meal) => {
+        dispatchCartAction({ type: 'ADD_ITEM', payload: meal })
     }
 
     const cartValue = {
-        items: items,
+        items: cartState.items,
         addItem: addItem,
     }
 
