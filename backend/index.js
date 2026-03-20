@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const path = require("path");
 const express = require("express");
 
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/meals", async (req, res) => {
-  const meals = "[]" // data should be read from file
+  const meals = await fs.readFile(path.join(__dirname, "data", "meals.json"), "utf8");
   res.json(JSON.parse(meals));
 });
 
