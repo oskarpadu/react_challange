@@ -2,14 +2,21 @@ import Meals from "./components/Meals";
 import "./index.css";
 import Header from "./components/Header";
 import { CartProvider } from "./store/CartContext";
+import Modal from "./components/UI/Modal";
+import { useState } from "react";
 
 const App = () => {
- return (
+const [modalIsOpen, setModalIsOpen] = useState(false);
+
+return (
     <CartProvider>
-      <Header />
-      <main>
-        <Meals />
-      </main>
+        <Header onOpenCart={() => setModalIsOpen(true)} />
+        <main>
+            <Meals />
+        </main>
+        <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+            <p>Test</p>
+        </Modal>
     </CartProvider>
   );
 }
