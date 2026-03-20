@@ -1,6 +1,14 @@
 import Button from './UI/Button'
+import { useContext } from 'react'
+import CartContext from '../store/CartContext'
 
 const MealItem = (props) => {
+    const cartCtx = useContext(CartContext)
+
+    const addToCart = () => {
+        cartCtx.addItem(props.meal)
+    }
+
     return (
         <li className="meal-item">
             <article className="meal-item-article">
@@ -11,7 +19,7 @@ const MealItem = (props) => {
                     <p className="meal-item-description">{props.meal.description}</p>
                 </div>
                 <p className='meal-item-action'>
-                    <Button>Add to Cart</Button>
+                    <Button onClick={addToCart}>Add to Cart</Button>
                 </p>
             </article>
         </li>
